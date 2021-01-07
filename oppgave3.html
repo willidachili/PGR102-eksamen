@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Oppgave 3. Matlageret (25%)</title>
+</head>
+<body>
+
+	<h3>Matlageret</h3>
+	<label>Produktnavn</label>
+	<input id="product-name-txt" type="text"><br>
+	<label>Antall på lager</label>
+	<input id="product-amount-txt" type="text"><br>
+	<input id="add-product-btn" type="button" value="Legg til produkt i array">
+	<input id="show-product-btn" type="button" value="Vis produkter du har lagt til">
+	<div id="output-div"></div>
+
+	<script>	
+		/* Henter alle ID-er og deklarerer de som variabler */
+		var productNameTxt = document.getElementById("product-name-txt");
+		var productAmountTxt = document.getElementById("product-amount-txt");
+		var addProductBtn = document.getElementById("add-product-btn"); 
+		var showProductBtn = document.getElementById("show-product-btn"); 
+		var outputDiv = document.getElementById("output-div");
+	
+		
+		
+		
+		/* Lager et tomt objectArray som vi pusher inn nye variabler med i funskjonen nedenfor */
+		var objectArray = [];
+		
+		/* Funksjon for å legge til nye produkter og mengder av dem. */
+		function addProduct(){
+			outputDiv.innerHTML = "";
+			var productName = productNameTxt.value;
+			var productAmount = productAmountTxt.value;
+			if(productName !=  "" && productAmount != "" && isNaN(parseInt(productAmount)) === false){
+				var productObject = {name: productName, amount: productAmount}; // Lager et objekt for hvert produkt.
+				objectArray.push(productObject); // Legger objektet inn i arrayet.
+				outputDiv.innerHTML = `${productName}, antall: ${productAmount} `;
+			} else {
+				outputDiv.innerHTML = `Du må fylle inn begge feltene!`; 
+			}
+		}
+
+		/* Besvarelse legges til før og/eller etter funksjonen */
+		function sortByAmount(a, b) {
+		  if (a.amount < b.amount) {
+			return 1;
+		  }
+		  if (a.amount > b.amount) {
+			return -1;
+		  }
+		  return 0;
+		}
+		/* Vi klarte ikke å implementere denne funksjonen rett, men sånn vi forstår det så gjør den følgende: 
+			funskjonen uten noe ekstra sammenlikner to parametre opp mot hverandre og sjekker hvem som er størst
+			så returnerer den en verdi som enten er -1(a<b), 1(a>b), 0(alt annet, f.eks. hvis a = b)
+			spesifikt sier funskjonen a.amount og b.amount som betyr bare at den tar parametre.amount f.eks i et objekt. 
+
+			I teorien burde vi kunne ha tatt arrayet vårt og ganget det med seg selv med en index plass flyttet og fått et output litt som dette: 
+
+			[20, 10, 30, 25]
+                      0   1   2   3  
+                     -1   1  -1  -1
+                      1   1  -1  -1
+                      1   1  -1   1
+                      1   3  -1   2
+                     30, 20, 10,25
+                      0   1   2  3
+                      -1  -1  1  1
+                      -1  1   1 -1
+                      -1  1   1 -1
+                      0   2   3  1
+
+                      30, 25, 20 , 10
+                       0   1   2    3
+                      -1  -1  -1    1
+                      -1  -1   1    1
+                      -1   1  -1    1
+                       0   0   1    3
+
+                      30, 25,  20, 10                   
+                       0   0    1    3
+                      -1  -1   -1    1
+                      -1  -1    1    1
+                      -1   1    1    1
+                       0   1    2    3
+ 
+                       30 25  20   10
+					   0  1   2    3
+			hvor den ganger 0 med 1, 0 med 2 osv 4 ganger (nested for-loop) 16 * 4 ganger og returnere et sortert array men det fikk vi desverre ikke til
+		*/
+
+		/* Funksjon som viser produktene i den rekkefølgen de ble lagt til i arrayet */
+		function showProducts(){
+			outputDiv.innerHTML = "";
+			var objectArrayLen = objectArray.length;
+			for(var i = 0; i < objectArrayLen; i++){
+			outputDiv.innerHTML += `<h3>${objectArray[i].name}</h3>
+				<p>amount: ${objectArray[i].amount}</p>`;
+			}
+		}
+		/* Gjør alle knappene trykkbare */
+		addProductBtn.onclick = addProduct;
+		showProductBtn.onclick = showProducts;
+	</script>
+</body>
+</html>

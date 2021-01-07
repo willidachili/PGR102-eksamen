@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="main.css">
+	<meta charset="UTF-8">
+	<title>Huskespill</title>
+</head>
+<body>
+	<center>
+	<h1>Huskespill om historie</h1>
+	<p id="info">Trykk på bildet for å få fakta!</p>
+
+	<div id="output-div">
+	</div>
+	
+	<div>
+		<!-- Bruker onclick her for å unngå addEventListener -->
+        <img id="rarrow" src="../images/l_arrow.png" onclick="previousSlide()" width="100px" height="100px">
+        <img id="larrow" src="../images/r_arrow.png" onclick="nextSlide()" width="100px" height="100px">
+		</div>
+		<br>
+		<input type="button" value="Start spillet!" id="start-btn">
+
+		<!-- Starter som display none her og synnliggjøres når start knappen er trykket -->
+		<input type="text" id="usr-answer" style="display:none">
+		<input type="button" id="check-result" value="Sjekk resultat!" style="display:none">
+
+		<p id="points-output">Dine poeng: 0</p>
+
+
+</center>
+
+
+	<!-- Merk! Faktaene er ikke grundig sett over og kan være feil! Dette spillet er mest ment for funskjonalitet -->
+<script src="main.js"></script>
+</body>
+</html>

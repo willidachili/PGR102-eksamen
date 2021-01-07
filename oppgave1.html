@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Oppgave 1. Glasset med ananasjuice (25%)</title>
+	<style>
+		/*
+			*******
+				Denne CSS-koden skal ikke endres
+			*******
+		*/
+		#glass-div{
+			width: 150px;
+			height: 350px;
+			border: 1px solid black;
+			border-top: none;
+			margin-top: 50px;
+			position: relative;
+		}		
+		#juice-div{
+			height: 50px;
+			width: 100%;
+			background-color: rgb(230, 230, 50);
+			opacity: 0.5;
+			position: absolute;
+			bottom: 0;
+			transition: height 2s;
+		}		
+		#status-p{
+			color: red;
+		}		
+	</style>
+</head>
+<body>
+		
+	<h3>Ananasjuicedrikking</h3>
+	
+	<label>Juice-mengde</label>
+	<input id="juice-amount-txt" type="text">
+		
+	<input id="pour-more-juice-btn" type="button" value="Hell i mer juice">
+	<input id="drink-juice-btn" type="button" value="Drikk juice">
+	
+	<p id="status-p">Status nå: OK</p>
+	
+	<div id="glass-div">
+		<span id="juice-level-span">50</span>
+		<div id="juice-div"></div>
+	</div>
+		
+	<script>
+		/* Besvarelse her */		
+		
+		/* Variabler for HTML elementene */
+		var juiceAmountTxt = document.getElementById("juice-amount-txt");
+		var pourMoreJuiceBtn = document.getElementById("pour-more-juice-btn");
+		var drinkJuiceBtn = document.getElementById("drink-juice-btn");
+		var statusP = document.getElementById("status-p");
+		var juiceLevelSpan = document.getElementById("juice-level-span");
+		var juiceDiv = document.getElementById("juice-div");
+
+		var juiceLevel = 50; // Variabel for juicenivået, starter på 50 da juice-diven er 50px høy i utgangspunktet
+		var juiceAmount = 0; // Variabel for mengden brukeren skriver inn.
+
+		/* Funksjon som kalles på av knappene, med parameter som avgjør om man heller i eller drikker */
+		function pourOrDrinkJuice(userChoice){
+			juiceAmount = parseInt(juiceAmountTxt.value);
+			/* if-statement som sjekker om bruker har skrevet inn noe, og 
+			i tillegg en isNaN for å sjekke om det brukeren har skrevet inn er et gyldig tall. */
+			if(juiceAmountTxt.value === "" || isNaN(juiceAmount)){
+				statusP.innerHTML = "Du må skrive inn et tall";
+			} else {
+				switch(userChoice){
+					case "pour":
+						juiceLevel += juiceAmount;
+						if(juiceLevel > 350){
+							juiceLevel = 350;
+							statusP.innerHTML = "Glasset er fullt";
+						}
+						break;
+					case "drink":
+						juiceLevel -= juiceAmount;
+						if(juiceLevel < 0){
+							juiceLevel = 0;
+							statusP.innerHTML = "Glasset er tomt";
+						}
+						break;
+				}
+
+				if(juiceLevel < 350 && juiceLevel > 0){
+					statusP.innerHTML = "Status nå: OK";
+				}
+
+				juiceLevelSpan.innerHTML = juiceLevel;
+				juiceDiv.style.height = `${juiceLevel}px`;
+			}
+		}
+
+		pourMoreJuiceBtn.onclick = function(){
+			pourOrDrinkJuice("pour");
+		}
+		drinkJuiceBtn.onclick = function(){
+			pourOrDrinkJuice("drink");
+		}
+
+	</script>
+	
+</body>
+</html>
